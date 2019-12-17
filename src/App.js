@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
+import posts from './posts';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  invrsSort(arry, polarity) {
+    if(polarity) {
+      return arry.sort(function(a,b) { return a.votes - b.votes });
+    } else {
+      return arry.sort(function(a,b) { return b.votes - a.votes });  
+    }
+  }
+
+  constructor(props) {
+    super(props);
+    let list = this.invrsSort(posts, false);
+    // list.sort(function(a,b) { return b.votes - a.votes });
+    this.state = {order: true, list: list};
+  }
+
+  render() {
+
+    return (
+      <div>
+        {this.state.list.map(item =>
+          <div>
+            <p>{item.title}</p>
+            <p>{item.description}</p>
+          </div>
+          )
+        }
+      </div>
+    );
+  }
 }
 
 export default App;
