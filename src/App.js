@@ -22,8 +22,7 @@ class App extends Component {
     this.state = {order: true, list: list};
   }
 
-  handleOrder(e) {
-    e.preventDefault();
+  handleOrder() {
     this.setState({ order: !this.state.order});
     this.setState({ list: this.invrsSort(this.state.list, this.state.order)});
   }
@@ -43,11 +42,12 @@ class App extends Component {
     this.state.list.map((item, n) => {
       if(index === n) {
         let newItem = { id: item.id, title: item.title, description: item.description, url: item.url, votes: item.votes + 1, writer_avatar_url: item.writer_avatar_url, post_image_url: item.post_image_url};
-        this.setState({ list: [...this.state.list.slice(0, n), newItem, ...this.state.list.slice(n + 1)]});
+        this.setState({ list: this.invrsSort([...this.state.list.slice(0, n), newItem, ...this.state.list.slice(n + 1)], this.state.order)}
+          );
       } else {
         return this.state;
       }
-    })
+    });
   }
 
   pushDown(index, e) {
@@ -55,11 +55,11 @@ class App extends Component {
     this.state.list.map((item, n) => {
       if(index === n) {
         let newItem = { id: item.id, title: item.title, description: item.description, url: item.url, votes: item.votes - 1, writer_avatar_url: item.writer_avatar_url, post_image_url: item.post_image_url};
-        this.setState({ list: [...this.state.list.slice(0, n), newItem, ...this.state.list.slice(n + 1)]});
+        this.setState({ list: this.invrsSort([...this.state.list.slice(0, n), newItem, ...this.state.list.slice(n + 1)], this.state.order)});
       } else {
         return this.state;
       }
-    })
+    });
   }
 
   render() {
