@@ -3,7 +3,20 @@ import './App.css';
 import posts from './posts';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
+import { createStore } from 'redux';
 
+const adjust = (state, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return state;
+    case 'DECREMENT':
+      return state;
+    case 'ORDER':
+      return state;
+    default:
+      return state;
+  }
+}
 
 class App extends Component {
 
