@@ -1,78 +1,93 @@
 import React, { Component } from 'react';
 import './App.css';
-import posts from './posts';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
+// import store from './store';
+import posts from './posts';
+// import invrsSort from './sort';
 import { createStore } from 'redux';
 
 const adjust = (state, action) => {
+  let newItem;
+  let newList;
   switch (action.type) {
     case 'INCREMENT':
-      return state;
+      state.list.map((item, n) => {
+        if(n === action.index) {
+          newItem = { ...item, votes: item.votes + 1 };
+          newList = invrsSort([...state.list.slice(0, n), newItem, ...state.list.slice(n + 1)], state.order);  
+        }
+      });
+      return {...state, list: newList };
     case 'DECREMENT':
-      return state;
-    case 'ORDER':
-      return state;
+      state.list.map((item, n) => {
+        if(n === action.index) {
+          newItem = { ...item, votes: item.votes - 1 };
+          newList = invrsSort([...state.list.slice(0, n), newItem, ...state.list.slice(n + 1)], state.order);  
+        }
+      });
+      return {...state, list: newList };
+    case 'ORDER_ASC':
+        return {
+          order: false,
+          list: invrsSort(state.list, false)
+        };
+    case 'ORDER_DSC':
+        return {
+          order: true,
+          list: invrsSort(state.list, true)
+        };
     default:
-      return state;
+        return state;
   }
 }
 
-class App extends Component {
-
-  invrsSort(arry, polarity) {
-    if(polarity) {
-      return arry.sort(function(a,b) { return b.votes - a.votes });
-    } else {
-      return arry.sort(function(a,b) { return a.votes - b.votes });  
-    }
+const invrsSort = (arry, polarity) => {
+  if(polarity) {
+    return arry.sort(function(a,b) { return b.votes - a.votes });
+  } else {
+    return arry.sort(function(a,b) { return a.votes - b.votes });  
   }
+}
+
+const store = createStore(adjust, { order: true, list: invrsSort(posts, true) });
+
+class App extends Component {
 
   constructor(props) {
     super(props);
-    let list = this.invrsSort(posts, true);
-    // list.sort(function(a,b) { return b.votes - a.votes });
-    this.state = {order: true, list: list};
+
+    this.state = {
+    order: true,
+    list: invrsSort(posts, true)
+    }
+
+    store.subscribe(() => {
+      this.setState({
+        order: store.getState().order,
+        list: store.getState().list
+      });
+    });
   }
 
-  handleOrder() {
-    this.setState({ order: !this.state.order});
-    this.setState({ list: this.invrsSort(this.state.list, this.state.order)});
-  }
-
-    handleOrderAsc(e) {
+  handleOrderAsc(e) {
     e.preventDefault();
-    this.setState({ order: false, list: this.invrsSort(this.state.list, false)});
+    store.dispatch({ type: 'ORDER_ASC'});
   }  
 
   handleOrderDsc(e) {
     e.preventDefault();
-    this.setState({ order: true, list: this.invrsSort(this.state.list, true)});
+    store.dispatch({ type: 'ORDER_DSC'});
   }
 
-  pushUp(index, e) {
+  handleIncrement(index, e) {
     e.preventDefault();
-    this.state.list.map((item, n) => {
-      if(index === n) {
-        let newItem = { id: item.id, title: item.title, description: item.description, url: item.url, votes: item.votes + 1, writer_avatar_url: item.writer_avatar_url, post_image_url: item.post_image_url};
-        this.setState({ list: this.invrsSort([...this.state.list.slice(0, n), newItem, ...this.state.list.slice(n + 1)], this.state.order)}
-          );
-      } else {
-        return this.state;
-      }
-    });
+    store.dispatch({ type: 'INCREMENT', index: index});
   }
 
-  pushDown(index, e) {
+  handleDecrement(index, e) {
     e.preventDefault();
-    this.state.list.map((item, n) => {
-      if(index === n) {
-        let newItem = { id: item.id, title: item.title, description: item.description, url: item.url, votes: item.votes - 1, writer_avatar_url: item.writer_avatar_url, post_image_url: item.post_image_url};
-        this.setState({ list: this.invrsSort([...this.state.list.slice(0, n), newItem, ...this.state.list.slice(n + 1)], this.state.order)});
-      } else {
-        return this.state;
-      }
-    });
+    store.dispatch({ type: 'DECREMENT', index: index});
   }
 
   render() {
@@ -81,14 +96,14 @@ class App extends Component {
       <div>
         <span>Orden: </span>
         <Button variant={!this.state.order ? "primary" : "outline-primary"} onClick={this.handleOrderAsc.bind(this)}>Ascendente</Button>
-        <Button variant={this.state.order ? "primary" : "outline-primary"} onClick={this.handleOrderDsc.bind(this)}>Descendente</Button>
+        <Button variant={this.state.order ? "primary" : "outline-primary"} onClick={this.handleOrderDsc.bind(this)} >Descendente</Button>
         {this.state.list.map((item, index) =>
-          <div>
+          <div key={'id' + index}>
             <p>{item.title}</p>
             <p>{item.description}</p>
             <p>Id{item.id}: Votes{item.votes}</p>
-            <Button key={item.id + 'up'} variant="info" onClick={this.pushUp.bind(this, index)}>+</Button>
-            <Button key={item.id + 'dw'} variant="info" onClick={this.pushDown.bind(this, index)}>-</Button>
+            <Button key={item.id + 'up'} variant="info" onClick={this.handleIncrement.bind(this, index)}>+</Button>
+            <Button key={item.id + 'dw'} variant="info" onClick={this.handleDecrement.bind(this, index)}>-</Button>
           </div>
           )
         }
