@@ -38,6 +38,7 @@ class PostsList extends Component {
 			      <div key={'id' + index}>
 			        <h5 className='itemTitle'>{item.title}</h5>
 			        <p>{item.description}</p>
+			        <span>Escrito por:<Image width={50} height={50} src={item.writer_avatar_url} roundedCircle fluid /></span>
 			      </div>
 			    </Col>
 			  </Row>
