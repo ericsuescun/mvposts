@@ -83,9 +83,6 @@ class App extends Component {
                     <div key={'id' + index}>
                       <h5 className='itemTitle'>{item.title}</h5>
                       <p>{item.description}</p>
-                      
-                      
-                      
                     </div>
                   </Col>
                 </Row>
