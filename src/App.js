@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Button, ButtonToolbar, Image } from 'react-bootstrap';
+import { Container, Row, Col, Image } from 'react-bootstrap';
 import store from './store';
 import posts from './posts';
 import invrsSort from './sort';
@@ -9,6 +9,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
 import ButtonBar from './ButtonBar';
+import PostsList from './PostsList';
 
 library.add(faCoffee, faSortUp, faSortDown);
 
@@ -53,26 +54,7 @@ class App extends Component {
               <br/>
               <ButtonBar />
               <br/>
-              {this.state.list.map((item, index) =>
-                <Row key={'id' + item.id}>
-                  <Col xs={4}>
-                    <Image src={item.post_image_url} rounded fluid />
-                  </Col>
-                  <Col xs={1}>
-                    <div className='centered-label'>
-                      <FontAwesomeIcon className='arrows' icon="sort-up" onClick={this.handleIncrement.bind(this, index)} />
-                      <p>{item.votes}</p>
-                      <FontAwesomeIcon className='arrows' icon="sort-down" onClick={this.handleDecrement.bind(this, index)} />
-                    </div>
-                  </Col>
-                  <Col xs={7}>
-                    <div key={'id' + index}>
-                      <h5 className='itemTitle'>{item.title}</h5>
-                      <p>{item.description}</p>
-                    </div>
-                  </Col>
-                </Row>
-              )}
+              <PostsList />
             </Col>
           </Row>
         </Container>
