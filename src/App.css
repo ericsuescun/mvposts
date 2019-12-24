@@ -28,6 +28,14 @@
   color: #61dafb;
 }
 
+.blogTitle {
+  text-align: center;
+}
+
+.itemTitle {
+  color: rgb(41,96,255);
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
