@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button } from 'react-bootstrap';
-import store from './store';
+import store from '../store';
 
 class ButtonBar extends Component {
 

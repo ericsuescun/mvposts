@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Image } from 'react-bootstrap';
-import store from './store';
-import { library } from '@fortawesome/fontawesome-svg-core';
+import { Row, Col, Image } from 'react-bootstrap';
+import store from '../store';
+// import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCoffee, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+// import { faCoffee, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
 
 
 class PostsList extends Component {
-	constructor(props) {
-		super(props);
-	}
 
 	handleIncrement(index, e) {
 	  e.preventDefault();

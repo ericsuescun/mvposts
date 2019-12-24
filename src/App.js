@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Container, Row, Col, Image } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import store from './store';
 import posts from './posts';
 import invrsSort from './sort';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
-import ButtonBar from './ButtonBar';
-import PostsList from './PostsList';
+import ButtonBar from './components/ButtonBar';
+import PostsList from './components/PostsList';
 
 library.add(faCoffee, faSortUp, faSortDown);
 
