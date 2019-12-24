@@ -8,6 +8,7 @@ import invrsSort from './sort';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCoffee, faSortUp, faSortDown } from '@fortawesome/free-solid-svg-icons';
+import ButtonBar from './ButtonBar';
 
 library.add(faCoffee, faSortUp, faSortDown);
 
@@ -27,16 +28,6 @@ class App extends Component {
         list: store.getState().list
       });
     });
-  }
-
-  handleOrderAsc(e) {
-    e.preventDefault();
-    store.dispatch({ type: 'ORDER_ASC'});
-  }  
-
-  handleOrderDsc(e) {
-    e.preventDefault();
-    store.dispatch({ type: 'ORDER_DSC'});
   }
 
   handleIncrement(index, e) {
@@ -60,12 +51,7 @@ class App extends Component {
               <h1 className='blogTitle'>Blog posts populares</h1>
               <hr />
               <br/>
-              <div className='button-bar'>
-                <span>Orden:
-                <Button className='buttons' variant={!this.state.order ? "primary" : "outline-primary"} onClick={this.handleOrderAsc.bind(this)} >Ascendente</Button> 
-                <Button variant={this.state.order ? "primary" : "outline-primary"} onClick={this.handleOrderDsc.bind(this)} >Descendente</Button>
-                 </span>
-              </div>
+              <ButtonBar />
               <br/>
               {this.state.list.map((item, index) =>
                 <Row key={'id' + item.id}>
