@@ -58,14 +58,14 @@ class App extends Component {
             <Col xs={{ span: 8, offset: 2}} mt={3}>
               <br/>
               <h1 className='blogTitle'>Blog posts populares</h1>
-              <p>Icono: <FontAwesomeIcon icon="coffee" /><FontAwesomeIcon icon="sort-up" /></p>
               <hr />
               <br/>
-              <span>Orden: </span>
-              <ButtonToolbar>
-                <Button variant={!this.state.order ? "primary" : "outline-primary"} onClick={this.handleOrderAsc.bind(this)} >Ascendente</Button>
+              <div className='button-bar'>
+                <span>Orden:
+                <Button className='buttons' variant={!this.state.order ? "primary" : "outline-primary"} onClick={this.handleOrderAsc.bind(this)} >Ascendente</Button> 
                 <Button variant={this.state.order ? "primary" : "outline-primary"} onClick={this.handleOrderDsc.bind(this)} >Descendente</Button>
-              </ButtonToolbar>
+                 </span>
+              </div>
               <br/>
               {this.state.list.map((item, index) =>
                 <Row key={'id' + item.id}>
@@ -73,11 +73,11 @@ class App extends Component {
                     <Image src={item.post_image_url} rounded fluid />
                   </Col>
                   <Col xs={1}>
-                    <FontAwesomeIcon icon="sort-up" onClick={this.handleIncrement.bind(this, index)} />
-                    <Button key={item.id + 'up'} variant="info" onClick={this.handleIncrement.bind(this, index)}>+</Button>
-                    <p>{item.votes}</p>
-                    <Button key={item.id + 'dw'} variant="info" onClick={this.handleDecrement.bind(this, index)}>-</Button>
-                    <FontAwesomeIcon icon="sort-down" onClick={this.handleDecrement.bind(this, index)} />
+                    <div className='centered-label'>
+                      <FontAwesomeIcon className='arrows' icon="sort-up" onClick={this.handleIncrement.bind(this, index)} />
+                      <p>{item.votes}</p>
+                      <FontAwesomeIcon className='arrows' icon="sort-down" onClick={this.handleDecrement.bind(this, index)} />
+                    </div>
                   </Col>
                   <Col xs={7}>
                     <div key={'id' + index}>

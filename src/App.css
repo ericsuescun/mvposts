@@ -44,3 +44,21 @@
     transform: rotate(360deg);
   }
 }
+
+.centered-label {
+  text-align: center;
+}
+
+.arrows {
+  color: rgb(41,96,255);
+}
+
+.button-bar {
+  display: inline-flex;
+  margin-bottom: 20px;
+}
+
+.buttons {
+  margin-left: 5px;
+  margin-right: 5px;
+}
